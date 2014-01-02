@@ -1,0 +1,105 @@
+@author Dimitrios Vourkas
+
+=====================
+*Project description*
+=====================
+Folders
+=======
+src/ -- the src folder contains the projects files.
+test/ -- the test folder contains some junit tests.
+Solution_Files/ -- the folder contains the text solutions files
+filesBack/ -- the folder contains bachup for the pieces.txt file
+===================
+The project has been created using Maven, and Spring 3 and you can run the project from Main class.
+Classes
+=======
+-------------------
+PuzzleSolution.java
+-------------------
+is the main class that is responsible of the solution.
+Methods
+-------
+The method create(List, position) recursive search for the solution. First for each piece creates a list
+that contains all the views of the specific piece( Flips and Rotates). Next the method calls for each piece
+the pieceFits(Matrix, Position). If the method returns true then the specific view of the piece has been
+ inserted into the puzzleSolList that contains all the solutions pieces.
+ 
+The puzzle has the form bellow:
+
+   | 4 |
+|5 | 1 | 6 |
+   | 2 |
+   | 3 |
+   
+First has been inserted the first piece in the position 1. Next the piece in the position 2 should be fits with the piece 
+in the position 1, piece 3 with the piece in the position 2, piece 4 with the pieces in the positions 0 and 3, piece 5 with 
+the pieces in the positions 0, 1, 2, 3 and 4 and finally the piece 6 with the pieces in the positions 0, 1, 2, 3 and 4.
+In order to check if one piece is matched in a specific position first check the corners 0,0 and 4,4 that the sum should 
+be less or equal than 1 and then the points 0,1 - 0,2 - 0,3 that should be equals to one. The dimensions are depended from
+the position of the piece. The methods that are responsible whit the previous are:
+
+checkIfPieceFits2, checkIfPieceFits3, checkIfPieceFits4, checkIfPieceFits5, checkIfPieceFits6 and each of them calls the methods:
+checkCorner(int a, int b), checkHorizontalSide(int[][] matrixA, int[][] matrixB), checkLeftVerticalSide(int[][] matrixA, 
+int[][] matrixB), checkRightVerticalSide(int[][] matrixA, int[][] matrixB)..............
+
+The method createColorList() creates a list that contains one list of each color. For each color list calls the create method
+in order to find the solution. When the create method returns then call the method insertToMatrix of the Puzzle class in order 
+to create the Puzzle matrix and then prints the solution and creates the solutions files.
+
+The method createFile(String color) creates the solution file for each color
+-----------
+Puzzle.java
+-----------
+This class contains an 25 X 15 matrix which contains the puzzle solution.
+Methods
+-------
+
+the insertToMatrix method creates a 25 X 10 matrix which has the letter "O" if the piece has 1 or space "" if the piece has 0.
+the printPUzzle prints the solution for each color.
+
+-------------------
+PieceAddRecord.java
+-------------------
+The class use the method addRecords() in order to insert a puzzle piece in to the piece.txt file
+Methods
+-------
+The addRecord method asks from user to insert the piece description like in the form below:
+"Piece description will be an 5X5 array like : ",
+
+						 00100
+						 01110
+						 11111
+						 01110
+						 00100
+						 
+Next the method uses the flipPiece method and the rotatePiece method to rotate and flip the piece 4 times.
+Finally inserts the piece description and all matrix views (rotated and reversed) to the file.
+
+----------------------------
+PieceRecordSerializable.java
+----------------------------
+
+This class used to describe each piece. The properties of the class are: 
+
+	private String  pieceID;
+	private String  color;
+
+	private int[][] piece1=new int[5][5];
+	private int[][] piece2=new int[5][5];
+	private int[][] piece3=new int[5][5];
+	private int[][] piece4=new int[5][5];
+	private int[][] piece5=new int[5][5];
+	private int[][] piece6=new int[5][5];
+	private int[][] piece7=new int[5][5];
+	private int[][] piece8=new int[5][5];
+Also the class has constructors and all the set and get methods.
+
+----------------------
+ReadPiecesRecords.java
+----------------------
+This class used to insert all the records from the pieces.txt file to the "pieceRecords" list.
+
+------------
+pieces.txt
+------------
+This files contains all the pieces records.
